@@ -6,19 +6,30 @@ import Content from "./Content";
 
 
 function Home(){
-    const [allMovies, setMovies]= useState([]);
+  
+    const [featuredMovies, setFeaturedMovies] = useState([]);
+    const [featuredShows, setFeaturedShows] = useState([]);
+
     useEffect(() => {
-        fetch("https://fake-moviedb.herokuapp.com/movies")
+        fetch("https://mongodb-api-fakemovie.herokuapp.com/movies/movie-list/feature?feature=true")
           .then((res) => res.json())
           .then((movies) => {
-            setMovies(movies);
+            setFeaturedMovies(movies.body);
+          });
+      }, []);
+
+      useEffect(() => {
+        fetch("https://mongodb-api-fakemovie.herokuapp.com/movies/tv-list/feature?feature=true")
+          .then((res) => res.json())
+          .then((movies) => {
+            setFeaturedShows(movies.body);
           });
       }, []);
     return (
         <>
             <Hero/>
-            <MovieCollection title={"Netflix-Original"} content={allMovies.filter((movie) => movie.genre_ids === 2)} />
-            <MovieCollection title={"Featured Movie"} content={allMovies.filter((movie) => movie.genre_ids === 1)} />
+            <MovieCollection title={"Netflix-Original"} content={featuredShows} />
+            <MovieCollection title={"Featured Movie"} content={featuredMovies} />
             <Content />
            
         

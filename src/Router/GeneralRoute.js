@@ -8,29 +8,38 @@ import { Container } from 'react-bootstrap';
 
 function GeneralRoute(){
     const match = useRouteMatch();
-    const [allMovies, setMovies]= useState([]);
- 
+    // const [allMovies, setMovies]= useState([]);
+    const [movieList, setMovieList] = useState([]);
+    const [showList, setShowList] = useState([]);
 
     //Retrieve movie
     useEffect(() => {
-      fetch("https://fake-moviedb.herokuapp.com/movies")
+      fetch("https://mongodb-api-fakemovie.herokuapp.com/movies/movie-list")
         .then((res) => res.json())
         .then((movies) => {
-          setMovies(movies);
-        });
+          setMovieList(movies.body)
+        })
     }, []);
+
+    useEffect(() => {
+        fetch("https://mongodb-api-fakemovie.herokuapp.com/movies/tv-list")
+          .then((res) => res.json())
+          .then((movies) => {
+            setShowList(movies.body)
+          })
+      }, []);
 
     return(        
         <Switch>
             <Route path={`${match.path}/movie-list`}>
                 <Container className="pg-max-width">
-                    <MovieCollection title={"Featured Movie"}  content={allMovies.filter((movie) => movie.genre_ids === 2)}/>
+                    <MovieCollection title={"Featured Movie"}  content={movieList}/>
                 </Container>
                 
             </Route>
             <Route path={`${match.path}/tv-list`}>
                 <Container className="pg-max-width">
-                    <MovieCollection title={"Netflix-Original"} content={allMovies.filter((movie) => movie.genre_ids === 1)} />
+                    <MovieCollection title={"Netflix-Original"} content={showList} />
                 </Container>
             </Route>
             <Route path={`${match.path}/:id`}>

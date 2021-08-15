@@ -11,7 +11,7 @@ export default function FeaturedSection(props){
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch("https://fake-moviedb.herokuapp.com/movies")
+        fetch("https://mongodb-api-fakemovie.herokuapp.com/movies")
           .then((res) => res.json())
           .then((movies) => {
             setMovies(movies);
@@ -39,7 +39,7 @@ export default function FeaturedSection(props){
                         <Col xs={4} md={3} lg={2} key={result.id}>
                             <SmallImgCard movie={result}/>
                         </Col>
-                    ))};
+                    ))}
                 </Row>                
             </Container>
         </div>

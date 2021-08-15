@@ -15,7 +15,7 @@ export default function Hero(){
                         alt="First slide"
                     />
                 </Carousel.Item>
-                ))};
+                ))}
             </Carousel>
         </Container>
         </div>
